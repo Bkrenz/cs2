@@ -31,6 +31,14 @@ import java.util.*;
 
 public class DoctorsOffice {
     
+	/* Class Members */
+	
+	private String m_OfficeName;
+	private int m_PatientCounter;
+	private HashMap<Integer, Patient> m_PatientList;
+	
+	/* End Class Members */
+	
 
     /**
      *  Constructor for a DoctorsOffice object.
@@ -40,7 +48,11 @@ public class DoctorsOffice {
      **/
 
     public DoctorsOffice (String name) {
+    	this.m_OfficeName = name;
+    	this.m_PatientCounter = 999;
+    	this.m_PatientList = new HashMap<>();
     }
+    
 
     /**
      * Add a new patient to the office.  The identification
@@ -57,8 +69,12 @@ public class DoctorsOffice {
 
     public int addPatient (String firstName, String lastName,
 	int age) {
+    	
+    	this.m_PatientCounter++;
+    	
+    	this.m_PatientList.put(this.m_PatientCounter, new Patient(lastName, firstName, age));
 
-	return 0;
+    	return this.m_PatientCounter;
 
     }
 
@@ -96,6 +112,8 @@ public class DoctorsOffice {
     public void addMedication(int patientNo, String medicationName,
 	boolean isGeneric )
         throws NoSuchPatientException {
+    	this.m_PatientList.get(patientNo).recordNewMed(medicationName, isGeneric);
+    	
     }
 
     /**
@@ -117,6 +135,10 @@ public class DoctorsOffice {
 
     public void printMedicationDetail (int patientNo) 
 	throws NoSuchPatientException {
+    	Patient l_Patient = this.m_PatientList.get(patientNo);
+    	if (l_Patient.getNumberOfMeds() == 0)
+    		System.out.println("No Medications Prescribed");
+    	l_Patient.printMedicationHistory();
 
     }
 

@@ -31,6 +31,14 @@ import java.util.*;
 
 public class Patient {
 
+	/* Class Members */
+	
+	private String m_FirstName;
+	private String m_LastName;
+	private int m_Age;
+	private List<Medication> m_MedicationList;
+	
+	/* End Class Members */
 
 /** 
 * Constructor for this object.
@@ -41,6 +49,10 @@ public class Patient {
 */
 
     public Patient( String myLast, String myFirst, int age) {
+    	this.m_Age = age;
+    	this.m_FirstName = myFirst;
+    	this.m_LastName = myLast;
+    	this.m_MedicationList = new ArrayList<>();
     }
 
     /**
@@ -52,7 +64,7 @@ public class Patient {
      */
 
     public String getName() {
-        return  "" ;
+        return  this.m_LastName + "," + this.m_FirstName ;
     }
 
     /** 
@@ -62,7 +74,7 @@ public class Patient {
      */
 
     public int getAge() {
-        return 0;
+        return this.m_Age;
     }
 
 
@@ -74,7 +86,7 @@ public class Patient {
     */
 
     public int getNumberOfMeds() {
-        return 0;
+        return this.m_MedicationList.size();
     }
  
 
@@ -86,7 +98,8 @@ public class Patient {
     *
     */
 
-    public void recordNewMed(String name, boolean generic ) {                          
+    public void recordNewMed(String name, boolean generic ) {
+    	this.m_MedicationList.add(new Medication(name, generic));
     }
 
     /**
@@ -102,7 +115,15 @@ public class Patient {
     */
 
     public boolean removeMed(String med) {
-	return false;
+    	
+    	for (Medication l_Medi: this.m_MedicationList)
+    		if (l_Medi.getName().equals(med))
+    		{
+    			this.m_MedicationList.remove(l_Medi);
+    			return true;
+    		}
+    	
+    	return false;
     }
 
 
@@ -113,7 +134,11 @@ public class Patient {
     *
     */
 
-    public void printMedicationHistory () {                          
+    public void printMedicationHistory () {
+    	for (Medication l_Medi : this.m_MedicationList)
+    		System.out.println(l_Medi);
+    	
+    	
     }
 
 
@@ -132,7 +157,17 @@ public class Patient {
      */
 
     public String toString() {
-        return "";
+    	
+    	// Init Formatting String
+    	String l_FormatString = "";
+    	
+    	// Build String
+    	l_FormatString += this.getName() + " " + this.m_Age + "\n";
+    	for (Medication l_Medi : this.m_MedicationList)
+    		l_FormatString += l_Medi.toString() + "\n";
+    	
+    	// Return String
+        return l_FormatString;
      }
 
 } // Patient
