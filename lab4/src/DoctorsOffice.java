@@ -112,7 +112,9 @@ public class DoctorsOffice {
     public void addMedication(int patientNo, String medicationName,
 	boolean isGeneric )
         throws NoSuchPatientException {
-    	this.m_PatientList.get(patientNo).recordNewMed(medicationName, isGeneric);
+    	Patient l_Patient = this.m_PatientList.get(patientNo);
+    	if (l_Patient != null)
+    		l_Patient.recordNewMed(medicationName, isGeneric);
     	
     }
 
@@ -136,9 +138,9 @@ public class DoctorsOffice {
     public void printMedicationDetail (int patientNo) 
 	throws NoSuchPatientException {
     	Patient l_Patient = this.m_PatientList.get(patientNo);
+    	System.out.println(l_Patient);
     	if (l_Patient.getNumberOfMeds() == 0)
     		System.out.println("No Medications Prescribed");
-    	l_Patient.printMedicationHistory();
 
     }
 
@@ -180,6 +182,24 @@ public class DoctorsOffice {
     public void listInactive() {
     }
 
+    
+    public static void main(String[] args)
+    {
+    	DoctorsOffice l_Office = new DoctorsOffice("Office 1");
+    	
+    	l_Office.addPatient("John", "Doe", 12);
+    	
+    	try {
+			l_Office.addMedication(1000, "Prozaac", true);
+			l_Office.printMedicationDetail(1000);
+		} catch (NoSuchPatientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    }
+    
 
 
 } 
