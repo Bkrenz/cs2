@@ -1,0 +1,23 @@
+commit bc6b42ab49baa710542eb801060a0e5d5b259efc
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 20:09:23 2015 -0400
+
+    Added exception to AddMedication in DoctorsOffice
+
+commit 507604b3812b6a3dfbc0bf2b6f3dafd23ebd9f29
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 15:55:50 2015 -0400
+
+    Updated Implementation in Doctors Office
+
+commit bee552e03487a44aa76523bd6fa6546786a1e73b
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 15:43:10 2015 -0400
+
+    Added Implementation to DoctorsOffice, Patient for Lab4
+
+commit 569e4b2b65f19f5a0bc5cdd444ed8126329bd25a
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 15:10:36 2015 -0400
+
+    Init Commit of lab4

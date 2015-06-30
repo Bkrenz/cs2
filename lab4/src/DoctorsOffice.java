@@ -49,7 +49,7 @@ public class DoctorsOffice {
 
     public DoctorsOffice (String name) {
     	this.m_OfficeName = name;
-    	this.m_PatientCounter = 1000;
+    	this.m_PatientCounter = 999;
     	this.m_PatientList = new HashMap<>();
     }
     
@@ -115,7 +115,8 @@ public class DoctorsOffice {
     	Patient l_Patient = this.m_PatientList.get(patientNo);
     	if (l_Patient == null)
     		throw new NoSuchPatientException("addMedication()");
-    	l_Patient.recordNewMed(medicationName, isGeneric);
+    	else
+    		l_Patient.recordNewMed(medicationName, isGeneric);
     	
     }
 
@@ -138,10 +139,13 @@ public class DoctorsOffice {
 
     public void printMedicationDetail (int patientNo) 
 	throws NoSuchPatientException {
-    	Patient l_Patient = this.m_PatientList.get(patientNo);
-    	System.out.println(l_Patient);
-    	if (l_Patient.getNumberOfMeds() == 0)
-    		System.out.println("No Medications Prescribed");
+    	
+
+		Integer id = new Integer (patientNo);
+		Patient p = (Patient) (this.m_PatientList.get (id));
+		if (p == null)
+		    throw new NoSuchPatientException("printMedicationDetail()");
+		p.printMedicationHistory();
 
     }
 
@@ -188,8 +192,8 @@ public class DoctorsOffice {
     {
     	DoctorsOffice l_Office = new DoctorsOffice("Office 1");
     	
-    	l_Office.addPatient("John", "Doe", 12);
-    	
+    	int num = l_Office.addPatient("John", "Doe", 12);
+    	System.out.println(num);
     	try {
 			l_Office.addMedication(1000, "Prozaac", true);
 			l_Office.printMedicationDetail(1000);
