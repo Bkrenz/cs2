@@ -12,7 +12,11 @@
  *
  **/
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * A simple class to simulate the operation of a doctor's office
@@ -181,6 +185,21 @@ public class DoctorsOffice {
      **/
 
     public void listByAge() {
+    	List<Patient> l_Pats = new ArrayList<>();
+    	for (Patient pat : this.m_PatientList.values())
+    		l_Pats.add(pat);
+    	
+    	Comparator<Patient> comp = new Comparator<Patient>() {
+    		public int compare( Patient p1, Patient p2 )
+    		{
+    			return p1.getAge() - p2.getAge();
+    		}
+    	};
+    	
+    	Collections.sort(l_Pats, comp);
+    	for (Patient pat : l_Pats)
+    		System.out.println(pat);
+    	
     }
 
     /**
@@ -252,6 +271,7 @@ public class DoctorsOffice {
 				l_Office.addMedication(i+1000, "Prozaac", true);
 			}
 			l_Office.listByName();
+			l_Office.listByAge();
 		} catch (NoSuchPatientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
