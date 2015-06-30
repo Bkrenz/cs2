@@ -160,6 +160,15 @@ public class DoctorsOffice {
      **/
 
     public void listByName() {
+    	
+    	List<Patient> l_Pats = new ArrayList<>();
+    	for (Patient pat : this.m_PatientList.values())
+    		l_Pats.add(pat);
+    	Collections.sort(l_Pats, new PatientComparator());
+    	for (Patient pat : l_Pats)
+    		System.out.println(pat);
+    	
+    	
     }
 
 
@@ -192,11 +201,57 @@ public class DoctorsOffice {
     {
     	DoctorsOffice l_Office = new DoctorsOffice("Office 1");
     	
-    	int num = l_Office.addPatient("John", "Doe", 12);
-    	System.out.println(num);
+    	l_Office.addPatient("George", "Washington", 57);
+    	l_Office.addPatient("John", "Adams", 61);
+    	l_Office.addPatient("Thomas", "Jefferson", 57);
+    	l_Office.addPatient("James", "Madison", 57);
+    	l_Office.addPatient("James", "Monroe", 58);
+    	l_Office.addPatient("John Quincy", "Adams", 57);
+    	l_Office.addPatient("Andrew", "Jackson", 61);
+    	l_Office.addPatient("Martin", "Van Buren", 54);
+    	l_Office.addPatient("William Henry", "Harrison", 68);
+    	l_Office.addPatient("John", "Tyler", 51);
+    	l_Office.addPatient("James K", "Polk", 49);
+    	l_Office.addPatient("Zachary", "Taylor", 64);
+    	l_Office.addPatient("Millard", "Fillmore", 50);
+    	l_Office.addPatient("Franklin", "Pierce", 48);
+    	l_Office.addPatient("James", "Buchanan", 65);
+    	l_Office.addPatient("Abraham", "Lincoln", 52);
+    	l_Office.addPatient("Andrew", "Johnson", 46);
+    	l_Office.addPatient("Ulysses S", "Grant", 54);
+    	l_Office.addPatient("Rutherford B", "Hayes", 49);
+    	l_Office.addPatient("James A", "Garfield", 51);
+    	l_Office.addPatient("Chester A", "Arthur", 47);
+    	l_Office.addPatient("Grover", "Cleveland", 55);
+    	l_Office.addPatient("Benjamin", "Harrison", 55);
+    	l_Office.addPatient("William", "McKinley", 54);
+    	l_Office.addPatient("Theodore", "Roosevelt", 42);
+    	l_Office.addPatient("William Howard", "Taft", 51);
+    	l_Office.addPatient("Woodrow", "Wilson", 56);
+    	l_Office.addPatient("Warren G", "Harding", 55);
+    	l_Office.addPatient("Calvin", "Coolidge", 51);
+    	l_Office.addPatient("Herbert", "Hoover", 54);
+    	l_Office.addPatient("Franklin D", "Roosevelt", 51);
+    	l_Office.addPatient("Harry S", "Truman", 60);
+    	l_Office.addPatient("Dwight D", "Eisenhower", 62);
+    	l_Office.addPatient("John F", "Kennedy", 43);
+    	l_Office.addPatient("Lyndon B", "Johnson", 55);
+    	l_Office.addPatient("Richard", "Nixon", 56);
+    	l_Office.addPatient("Gerald", "Ford", 61);
+    	l_Office.addPatient("Jimmy", "Carter", 52);
+    	l_Office.addPatient("Ronald", "Reagan", 69);
+    	l_Office.addPatient("George H W", "Bush", 64);
+    	l_Office.addPatient("Bill", "Clinton", 46);
+    	l_Office.addPatient("George W", "Bush", 54);
+    	l_Office.addPatient("Barack", "Obama", 47);
+    	
+    	
     	try {
-			l_Office.addMedication(1000, "Prozaac", true);
-			l_Office.printMedicationDetail(1000);
+			for (int i = 0 ; i < 43 ; i++)
+			{
+				l_Office.addMedication(i+1000, "Prozaac", true);
+			}
+			l_Office.listByName();
 		} catch (NoSuchPatientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
