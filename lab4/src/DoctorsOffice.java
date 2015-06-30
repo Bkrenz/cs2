@@ -40,6 +40,7 @@ public class DoctorsOffice {
 	private String m_OfficeName;
 	private int m_PatientCounter;
 	private HashMap<Integer, Patient> m_PatientList;
+	private List<Patient> m_OldPatients;
 	
 	/* End Class Members */
 	
@@ -55,6 +56,7 @@ public class DoctorsOffice {
     	this.m_OfficeName = name;
     	this.m_PatientCounter = 999;
     	this.m_PatientList = new HashMap<>();
+    	this.m_OldPatients = new ArrayList<>();
     }
     
 
@@ -97,6 +99,16 @@ public class DoctorsOffice {
 
     public void removePatient (int patientNo) throws 
 	NoSuchPatientException {
+    	
+    	Patient l_Pat = this.m_PatientList.get(patientNo);
+    	
+    	if (l_Pat == null)
+    		throw new NoSuchPatientException("removePatient()");
+    	else
+    	{
+    		this.m_PatientList.remove(patientNo);
+    		this.m_OldPatients.add(l_Pat);
+    	}
 
     }
 
@@ -213,6 +225,10 @@ public class DoctorsOffice {
      **/
 
     public void listInactive() {
+    	for (Patient p : this.m_OldPatients)
+    	{
+    		System.out.println(p);
+    	}
     }
 
     
