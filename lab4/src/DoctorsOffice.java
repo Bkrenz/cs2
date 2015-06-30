@@ -49,7 +49,7 @@ public class DoctorsOffice {
 
     public DoctorsOffice (String name) {
     	this.m_OfficeName = name;
-    	this.m_PatientCounter = 999;
+    	this.m_PatientCounter = 1000;
     	this.m_PatientList = new HashMap<>();
     }
     
@@ -113,8 +113,9 @@ public class DoctorsOffice {
 	boolean isGeneric )
         throws NoSuchPatientException {
     	Patient l_Patient = this.m_PatientList.get(patientNo);
-    	if (l_Patient != null)
-    		l_Patient.recordNewMed(medicationName, isGeneric);
+    	if (l_Patient == null)
+    		throw new NoSuchPatientException("addMedication()");
+    	l_Patient.recordNewMed(medicationName, isGeneric);
     	
     }
 
