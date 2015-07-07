@@ -1,0 +1,11 @@
+commit 6b0554ba4804d16101db937ea7426e3d34471b1d
+Author: Bkrenz <rdk5039@rit.edu>
+Date:   Tue Jul 7 17:03:11 2015 -0400
+
+    Started work on Scramblepad
+
+commit db39d752aa1de283e6c4e4590498eded84ff9d96
+Author: Bkrenz <rdk5039@rit.edu>
+Date:   Tue Jul 7 16:51:43 2015 -0400
+
+    Adding implementation of AddressScreen
