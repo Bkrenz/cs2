@@ -37,17 +37,29 @@ public class ScramblePad extends Application{
 	/* End Constants */
 	
 	
+	/* Class Members */
+	
+	private String m_InputCode;
+	private String m_SecretCode;
+	private Label m_LockedLabel;
+	
+	/* End Class Members */
+	
+	
 	/* Inherited Methods */
 	
 	@Override
 	public void start(Stage p_PrimaryStage) throws Exception {
 		
+		this.m_InputCode = "";
+		this.m_SecretCode = this.getParameters().getRaw().get(0);
+		
 		// Setup the top label
 		FlowPane l_LabelPane = new FlowPane();
-		Label l_Label = new Label("Locked");
-		l_LabelPane.getChildren().add(l_Label);
+		this.m_LockedLabel = new Label("Locked");
+		l_LabelPane.getChildren().add(this.m_LockedLabel);
 		l_LabelPane.setAlignment( Pos.CENTER );
-		l_Label.setTextFill(Color.web("#9a0000"));
+		this.m_LockedLabel.setTextFill(Color.RED);
 		
 		// Setup the bottom buttons
 		FlowPane l_Buttons = new FlowPane();
@@ -108,10 +120,47 @@ public class ScramblePad extends Application{
 		l_Button.setMinSize(BTN_MIN_SIZE, BTN_MIN_SIZE);
 		l_Button.setMaxSize(BTN_MAX_SIZE, BTN_MAX_SIZE);
 		
-		l_Button.setOnAction( new ButtonHandler(p_Label) );
+		l_Button.setOnAction( new ButtonHandler(p_Label, this) );
 		
 		return l_Button;
 	}
+	
+	public void processInputs(String p_Input)
+	{
+		switch (p_Input)
+		{
+		case "Start" : 
+			this.pressStart();
+			break;
+		case "Okay" :
+			this.pressOkay();
+			break;
+		default :
+			this.m_InputCode += p_Input;
+		
+		}
+	}
+	
+	private void pressStart(){
+		
+		this.m_InputCode = "";
+		this.m_LockedLabel.setText("Locked");
+		this.m_LockedLabel.setTextFill(Color.RED);
+		
+	}
+	
+	private void pressOkay(){
+		
+		if (this.m_InputCode.equals(this.m_SecretCode))
+		{
+			this.m_LockedLabel.setText("Open");
+			this.m_LockedLabel.setTextFill(Color.GREEN);
+		}
+		
+		
+	}
+	
+	/* End Class Methods */
 	
 	
 	/* Main Method */
@@ -133,15 +182,17 @@ public class ScramblePad extends Application{
 class ButtonHandler implements EventHandler<ActionEvent> {
 	
 	private String m_Label;
+	private ScramblePad m_Pad;
 	
-	public ButtonHandler(String p_Label)
+	public ButtonHandler(String p_Label, ScramblePad p_Pad)
 	{
 		this.m_Label = p_Label;
+		this.m_Pad = p_Pad;
 	}
 	
 	public void handle(ActionEvent p_Event)
 	{
-		System.out.println("Pressed Button: " + this.m_Label);
+		this.m_Pad.processInputs(this.m_Label);
 	}
 	
 }
