@@ -1,0 +1,83 @@
+commit e72cc70de46abc2ad22515f420e02545e32217ed
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Thu Jul 23 19:12:44 2015 -0400
+
+    Completed Lab8
+
+commit 27d06e23ca7595fc3e3bfab480527fcdf56708cf
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Wed Jul 22 17:06:31 2015 -0400
+
+    Completed Lab7
+
+commit 30eabd4b83437969316785831489a77b0794c61d
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Tue Jul 14 16:47:16 2015 -0400
+
+    Completed Lab6, Activity2
+
+commit eeeb20f5f20a26dfe9b6f817361d1af68d2d665f
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Tue Jul 14 16:26:28 2015 -0400
+
+    Added Project1 and Lab6 to repo, started implementation of Lab6. Lab6, Activity1 is complete.
+
+commit 8534ee7f71fa602913f9287d74ec389e29dd7b0c
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Tue Jul 7 18:15:00 2015 -0400
+
+    Added Lab5
+
+commit e7c741c870a549d0a8c4bb991da380bb09dcfdfb
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Thu Jul 2 18:56:29 2015 -0400
+
+    Initial Commit for Lab5
+
+commit e04509a479bbf178d727c132bbb2df90591a63de
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Mon Jun 29 21:04:12 2015 -0400
+
+    Finished lab4-4, I think
+
+commit 01bc6300c30ecd4ac1079aa9339aabe18ef3bbac
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Mon Jun 29 21:01:55 2015 -0400
+
+    Finished lab3
+
+commit 4dab7d0862152e311b56d7a10b19f2d5196abf6c
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Mon Jun 29 20:49:19 2015 -0400
+
+    Added Patient Comparator
+
+commit a783ab66c2eed62a7fe392c1e629b3f9ef96c456
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Mon Jun 29 20:21:28 2015 -0400
+
+    Fixed problems, submitting lab4-1
+
+commit bc6b42ab49baa710542eb801060a0e5d5b259efc
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 20:09:23 2015 -0400
+
+    Added exception to AddMedication in DoctorsOffice
+
+commit 507604b3812b6a3dfbc0bf2b6f3dafd23ebd9f29
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 15:55:50 2015 -0400
+
+    Updated Implementation in Doctors Office
+
+commit bee552e03487a44aa76523bd6fa6546786a1e73b
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 15:43:10 2015 -0400
+
+    Added Implementation to DoctorsOffice, Patient for Lab4
+
+commit 569e4b2b65f19f5a0bc5cdd444ed8126329bd25a
+Author: ROBERT DAVID KRENCY <rdk5039@cs.rit.edu>
+Date:   Mon Jun 29 15:10:36 2015 -0400
+
+    Init Commit of lab4

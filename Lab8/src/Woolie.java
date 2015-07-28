@@ -2,13 +2,11 @@ class Woolie extends Thread{
 		
 		private Room m_SwitchRoom;
 		private boolean m_Switched;
-		private int m_ID;
 		
-		public Woolie(Room p_Room, int p_ID)
+		public Woolie(Room p_Room)
 		{
 			this.m_SwitchRoom = p_Room;
 			this.m_Switched = false;
-			this.m_ID = p_ID;
 		}
 		
 		public void run()
@@ -17,11 +15,11 @@ class Woolie extends Thread{
 			{
 				synchronized(this.m_SwitchRoom)
 				{
+					this.m_SwitchRoom.visit();
 					if (!this.m_SwitchRoom.getStatus() && !this.m_Switched)
 					{
 						this.m_SwitchRoom.switchStatus();
 						this.m_Switched = true;
-						System.out.println("Woolie " + this.m_ID + " turned flipped the switched!");
 					}
 				}
 			}

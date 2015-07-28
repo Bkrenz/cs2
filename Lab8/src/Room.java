@@ -2,11 +2,13 @@ public class Room{
 		
 		private boolean m_Switch;
 		private boolean m_Solved;
+		private int m_TimesVisited;
 		
 		public Room()
 		{
 			this.m_Switch = false;
 			this.m_Solved = false;
+			this.m_TimesVisited = 0;
 		}
 		
 		public boolean getStatus()
@@ -27,6 +29,16 @@ public class Room{
 		public void setSolved()
 		{
 			this.m_Solved = true;
+		}
+		
+		public void visit()
+		{
+			this.m_TimesVisited++;
+		}
+		
+		public int getTimesVisited()
+		{
+			return this.m_TimesVisited;
 		}
 		
 	}

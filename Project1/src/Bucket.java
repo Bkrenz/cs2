@@ -1,120 +1,103 @@
-import java.util.ArrayList;
-import java.util.Collections;
-
-
 /**
- * 
+ * Created by Meghan Dwyer and Bob Krency on 7/12/2015.
  */
 
 /**
- * @author bkrenz
- *
+ * Bucket class that will be utilized in the Sand class
  */
 public class Bucket {
-	
-	/* Class Members */
-	
-	private int m_Capacity;
-	private int m_FillAmount;
-	
-	/* End Class Members */
-	
-	
-	/* Constructors */
-	
-	public Bucket(int p_Capacity)
-	{
-		this.m_Capacity = p_Capacity;
-		this.m_FillAmount = 0;
-	}
-	
-	/* End Constructors */
-	
-	
-	/* Class Methods */
-	
-	
-	public int getCapacity()
-	{
-		return this.m_Capacity;
-	}
-	
-	
-	public int getFillAmount()
-	{
-		return this.m_FillAmount;
-	}
-	
-	
-	public void fill()
-	{
-		this.m_FillAmount = this.m_Capacity;
-	}
-	
-	
-	public void fill(Bucket p_Bucket)
-	{
-		int l_RemainingCapacity = this.m_Capacity - this.m_FillAmount;
-		
-		if ( p_Bucket.getFillAmount() <  l_RemainingCapacity)
-			l_RemainingCapacity = p_Bucket.getFillAmount();
-		
-		p_Bucket.empty(l_RemainingCapacity);
-		
-		this.m_FillAmount += l_RemainingCapacity;
-	}
-	
-	
-	public void empty()
-	{
-		this.m_FillAmount = 0;
-	}
-	
-	
-	public void empty(int p_Amount)
-	{
-		this.m_FillAmount -= p_Amount;
-	}
-	
-	
-	public String toString()
-	{
-		return "Bucket:  Capacity - " + this.m_Capacity + " , Fill Amount - " + this.m_FillAmount;
-	}
-	
-	/* Class Methods */
-	
-	
-	/* Test Main */
-	
-	public static void main (String[] args)
-	{
-		Bucket b1 = new Bucket(10);
-		Bucket b2 = new Bucket(5);
-		Bucket b3 = new Bucket(6);
-		
-		ArrayList<Bucket> buckets = new ArrayList<>();
-		buckets.add(b1);
-		buckets.add(b2);
-		buckets.add(b3);
-		
-		Collections.sort(buckets, new BucketComparator());
-		
-		b1.fill();
-		b2.fill(b1);
-		
-		for (Bucket b : buckets)
-			System.out.println(b);
-		
-		
-	}
-	
-	/* End Test Main */
 
-}
+    /**
+     * Represents how much sand it is possible for the bucket to hold
+     */
+    private int capacity;
 
+    /**
+     * Represents how much sand the bucket currently holds
+     */
+    private int fill;
 
+    /**
+     * Bucket constructor
+     * @param bucketCapactiy - how much it is possible for a bucket to hold
+     */
+    public Bucket(int bucketCapactiy){
+        this.capacity = bucketCapactiy;
+        this.fill = 0;
+    } // constructor
 
+    /**
+     * the capacity of the current bucket
+     * @return - integer representing how much sand a bucket can hold
+     */
+    public int getCapacity(){
+        return this.capacity;
+    } // getCapacity
 
+    /**
+     * the fill of the current bucket
+     * @return - integer representing how much sand a bucket currently holds
+     */
+    public int getFill(){
+        return this.fill;
+    } // getFill
 
+    /**
+     * fill the bucket to capacity
+     */
+    public void fillBucket(){
+        this.fill = this.capacity;
+    } //fillBucket
 
+    /**
+     * fill current bucket with sand in another bucket(b), if bucket b contains
+     * more sand than the current bucket can hold fill the current bucket
+     *
+     * adjust the amount of sand in bucket b accordingly
+     * @param b - a bucket object
+     */
+    public void fillBucket(Bucket b){
+        int fillAmount = this.getCapacity() - this.getFill();
+
+        if (b.getFill() < fillAmount){
+            fillAmount = b.getFill();
+        } // if
+
+        b.emptyBucket(fillAmount);
+
+        this.fill += fillAmount;
+    } //fillBucket
+
+    /**
+     * fill a bucket with a specified amount
+     * @param amount - amount of sand to put in the current bucket
+     */
+    public void fillBucket(int amount){
+        this.fill += amount;
+    }
+
+    /**
+     * create a copy of the current bucket
+     * @return - the copy of the current bucket
+     */
+    public Bucket clone(){
+        Bucket b = new Bucket(this.getCapacity());
+        b.fillBucket(this.getFill());
+        return b;
+    }
+
+    /**
+     * empty the current bucket of all sand
+     */
+    public void emptyBucket(){
+        this.fill = 0;
+    } //emptyBucket
+
+    /**
+     * empty the current bucket of a specified amount of sand
+     * @param amount - the amount of sand to be removed from the current bucket
+     */
+    public void emptyBucket(int amount){
+        this. fill -= amount;
+    } // emptyBucket
+} // Bucket

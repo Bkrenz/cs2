@@ -15,11 +15,11 @@ class WoolieLeader extends Thread{
 			{
 				synchronized(this.m_SwitchRoom)
 				{
+					this.m_SwitchRoom.visit();
 					if (this.m_SwitchRoom.getStatus())
 					{
 						this.m_SwitchRoom.switchStatus();
 						this.m_Count--;
-						System.out.println("Woolie Leader flipped the switch! Woolies Left: " + this.m_Count);
 					}
 					
 					if (this.m_Count == 0)

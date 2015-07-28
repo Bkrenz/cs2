@@ -1,3 +1,4 @@
+
 /**
  * 
  */
@@ -13,14 +14,30 @@ public class WooliePuzzle {
 	{
 		Room l_Room = new Room();
 		
+		WoolieLeader l_Leader = new WoolieLeader(l_Room, p_Count-1);
+		
 		for (int i = 1; i<p_Count; i++)
 		{
-			Thread l_Woolie = new Woolie(l_Room, i);
+			Thread l_Woolie = new Woolie(l_Room);
 			l_Woolie.start();
 		}
 		
-		WoolieLeader l_Leader = new WoolieLeader(l_Room, p_Count-1);
 		l_Leader.start();
+		
+		double expectedValue = p_Count * (p_Count-1);
+		
+		for (int j = 1; j < p_Count ; j ++)
+		{
+			expectedValue += (double)p_Count / (double)(p_Count-j);
+		}
+		
+		expectedValue = Math.ceil(expectedValue);
+		
+		System.out.println("Expected Value: " + expectedValue);
+		System.out.println("Outcome: " + l_Room.getTimesVisited());
+		
+		
+		
 	}
 	
 	

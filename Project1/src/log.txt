@@ -1,0 +1,65 @@
+commit e747ed97232e1adf47f76e045ce4395b9f218e46
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Thu Jul 16 13:41:16 2015 -0400
+
+    Project 2 - Implementation Complete, Code clean up still needed
+
+commit f90590b077df367e6406c71f02dfe1de2cb19885
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Tue Jul 14 21:07:15 2015 -0400
+
+    Project 2 - Updated Solver and Sand- updated naive solver to utilize generics and tested that Mobius and Solver still ran correctly
+
+commit 2cda976bd2a1dc975a2d1f6183cf71e04280a1d3
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Tue Jul 14 20:30:19 2015 -0400
+
+    Project 2 - Updated Sand - completed getNeighbors and printSolution (created supporting functions)
+
+commit 13e7628c7c0c7e5cc3b775c7d748e281546948a4
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Sun Jul 12 21:50:21 2015 -0400
+
+    Project 2 - Updated Puzzle Interface: changed getGoal to isGoal, updated Mobius to reflect changes. Began implementation of Sand class.
+
+commit d9145960aff87d936f7d74f5bc4c23550ea1e39b
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Sun Jul 12 21:10:05 2015 -0400
+
+    Project 2 First Commit - Updated Puzzle Interface to utilize generic types and updated Mobius to reflect generic types. Implemented Bucket class to be used in Sand class.
+
+commit 99b43de5e735b52abb9c3e8261f17b21f1ea41e2
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Mon Jun 29 20:06:33 2015 -0400
+
+    Update: Git log.txt file added
+
+commit 2c5a680e0b471b1ca9cd555a29dde3436a003de0
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Sun Jun 28 16:59:28 2015 -0400
+
+    Update: Project finalized, may need check requirements with professor
+
+commit 2792d4a2103c8d4fc86766eaba0ad539a631da67
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Sun Jun 28 16:09:37 2015 -0400
+
+    Update: Output complete
+
+commit 16468f50480d25641953c2daf826205e4089587c
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Sun Jun 28 16:05:32 2015 -0400
+
+    Update: Mobius, Puzzle, and Solver complete
+
+commit 2fab56be47c22d9038250b0a2b39b26071ee7b68
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Sat Jun 27 16:52:44 2015 -0400
+
+    Update: Mobius and Puzzle complete
+
+commit ec00222251f91892bc12153032b97139baf5b5cf
+Author: Meghan Dwyer <mjd9008@rit.edu>
+Date:   Sat Jun 27 14:51:43 2015 -0400
+
+    initial push attempt

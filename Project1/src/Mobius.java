@@ -1,100 +1,149 @@
 import java.util.ArrayList;
 
 /**
- * @version 
- * @author rdk5039 Robert Krency
- * email: rdk5039@rit.edu
+ * Created by Meghan Dwyer on 6/27/2015.
  *
+ * @author Meghan Dwyer mjd9008@rit.edu
  */
 
-public class Mobius implements Puzzle {
-	
-	/* PSVM */
-	
-	/**
-	 * Entry point of the program
-	 * @param args List of values for the Mobius Puzzle
-	 */
-	public static void main(String[] args)
-	{
-		if (args.length != 3)
-		{
-			System.out.println("Usage: java Mobius range start goal");
-			return;
-		}
-		
-		int l_Range = Integer.parseInt(args[0]);
-		int l_Start = Integer.parseInt(args[1]);
-		int l_Goal = Integer.parseInt(args[2]);
-		
-		Solver.Solve(new Mobius(l_Range, l_Start, l_Goal));
-	}
-	
-	/* End PSVM */
-	
-	
-	/* Class Members */
-	
-	private int m_Goal;
-	private int m_Start;
-	private int m_Range;
-	
-	/* End Class Members */
-	
-	
-	/* Constructors */
-	
-	/**
-	 * Create a Mobius Puzzle
-	 * @param p_Range the range of the puzzle
-	 * @param p_Start the starting point for the puzzle
-	 * @param p_Goal the goal point for the puzzle
-	 */
-	public Mobius(int p_Range, int p_Start, int p_Goal)
-	{
-		this.m_Range = p_Range;
-		this.m_Start = p_Start;
-		this.m_Goal = p_Goal;
-	}
-	
-	/* End Constructors */
+/**
+ * Class representing a Mobius Puzzle
+ */
+public class Mobius implements Puzzle<Integer>{
+    /**
+     * Main function to solve a given Mobius puzzle
+     *
+     * **Constraints**
+     * If args does not have exactly 3 arguments will print a usage message
+     * then exit program
+     * @param args - ArrayList of command line arguments
+     */
+    public static void main(String[] args) {
+        if (args.length != 3){
+            System.out.println("Usage: java Mobius range start goal");
+            System.exit(0);
+        } // if
+
+        Solver puzzleSolver = new Solver();
+        Puzzle mobiusPuzzle = new Mobius(args);
+        ArrayList<Integer> solution = puzzleSolver.solverBFS(mobiusPuzzle);
+        mobiusPuzzle.printSolution(solution);
+
+    } // psvm
+
+    /* Class Variables*/
+
+    /*
+     * Range associated with this Mobius puzzle
+     */
+    private int range;
+
+    /*
+     * Start associated with this Mobius puzzle
+     */
+    private int start;
+
+    /*
+     * Goal associated with this Mobius puzzle
+     */
+    private int goal;
+
+    /* Class Constructor */
+
+    /**
+     * Constructor
+     * @param args - command line arguments
+     */
+    public Mobius(String[] args){
+        this.range = Integer.parseInt(args[0]);
+        this.start = Integer.parseInt(args[1]);
+        this.goal = Integer.parseInt(args[2]);
+    } // constructor
+
+    /* Class Methods */
+
+    /**
+     * Get the integer range associated with this Mobius object
+     * @return - range
+     */
+    public int getRange(){
+        return this.range;
+    } // getRange
+
+    /**
+     * Get the integer starting config associated with this Mobius object
+     * @return - start
+     */
+    public Integer getStart(){
+        return this.start;
+
+    } // getStart
+
+    /**
+     * Get the integer goal of the Mobius object
+     * @return - goal
+     */
+    public boolean isGoal(Integer config){
+        return config == this.goal;
+    } // getGoal
+
+    /**
+     * Get the integer neighbors associated with parameter config
+     * @param config - the incoming config
+     * @return - ArrayList of the integer neighbors of the parameter config
+     */
+    public ArrayList<Integer> getNeighbors(Integer config){
+        ArrayList<Integer> neighbors = new ArrayList<>();
+        if (getRange() == 2){
+            if (config == getRange()){
+                neighbors.add(1);
+                return neighbors;
+            } // if getRange
+            else{
+                neighbors.add(2);
+                return neighbors;
+            } // else
+        } // else if range 2
+        else if (config == getRange()){
+            neighbors.add(config-1);
+            neighbors.add(1);
+        } // else if config getRange
+        else if (config == 1){
+            neighbors.add(getRange());
+            neighbors.add(config + 1);
+        } //else if config 1
+        else {
+            neighbors.add(config - 1);
+            neighbors.add(config + 1);
+        } // else
+
+        return neighbors;
+    } // getNeighbors
 
 
-	/* Puzzle Interface Methods */
+    /**
+     * print solution for Mobius
+     * @param solution - the puzzle solution
+     */
+    public void printSolution(ArrayList <Integer> solution){
 
-	@Override
-	public int getStart() {
-		return this.m_Start;
-	}
+        if (!this.isGoal(solution.get(solution.size()-1)))
+            System.out.println("No solution.");
 
+        else
+            for ( int i = 0 ; i < solution.size() ; i++ )
+                System.out.println("Step " + i + ": " + solution.get(i));
 
-	@Override
-	public int getGoal() {
-		return this.m_Goal;
-	}
+    }
 
+    /**
+     * hash function for the mobius puzzle to be used for memoization
+     * @param config - a puzzle's config
+     * @return - hash value of a config
+     */
+    public int hash(Integer config)
+    {
+        return config;
+    }
 
-	@Override
-	public ArrayList<Integer> getNeighbors(int p_Config) {
-		// Init local list
-		ArrayList<Integer> l_Neighbors = new ArrayList<Integer>();
-		
-		// Get the Neighbors
-		int num = p_Config-1;
-		if (num < 1)
-			num += this.m_Range;
-		l_Neighbors.add(num);
-		
-		num += 2;
-		if (num > this.m_Range)
-			num -= this.m_Range;
-		l_Neighbors.add(num);
-		
-		// return list
-		return l_Neighbors;
-	}
-	
-	/* End Puzzle Interface Methods */
-
-	
-}
+} // Mobius
