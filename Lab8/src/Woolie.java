@@ -2,27 +2,38 @@ class Woolie extends Thread{
 		
 		private Room m_SwitchRoom;
 		private boolean m_Switched;
+		private int m_ID;
 		
-		public Woolie(Room p_Room)
+		public Woolie(Room p_Room, int p_ID)
 		{
 			this.m_SwitchRoom = p_Room;
 			this.m_Switched = false;
+			this.m_ID = p_ID;
 		}
 		
 		public void run()
 		{
-			while (!this.m_SwitchRoom.getSolved())
+			while (true)
 			{
 				synchronized(this.m_SwitchRoom)
 				{
-					this.m_SwitchRoom.visit();
-					if (!this.m_SwitchRoom.getStatus() && !this.m_Switched)
+					if (this.m_SwitchRoom.getSolved())
 					{
-						this.m_SwitchRoom.switchStatus();
-						this.m_Switched = true;
+						break;
 					}
+					if (this.m_SwitchRoom.visit(this))
+						if (!this.m_SwitchRoom.getStatus() && !this.m_Switched)
+						{
+							this.m_SwitchRoom.switchStatus();
+							this.m_Switched = true;
+						}
 				}
 			}
+		}
+		
+		public int getID()
+		{
+			return this.m_ID;
 		}
 		
 	} 

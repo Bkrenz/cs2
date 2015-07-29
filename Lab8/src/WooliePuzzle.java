@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 
 /**
  * 
@@ -12,17 +14,33 @@ public class WooliePuzzle {
 	
 	public WooliePuzzle(int p_Count)
 	{
-		Room l_Room = new Room();
+		Room l_Room = new Room(p_Count);
 		
-		WoolieLeader l_Leader = new WoolieLeader(l_Room, p_Count-1);
+		ArrayList<Thread> l_ThreadList = new ArrayList<>();
+		
+		WoolieLeader l_Leader = new WoolieLeader(l_Room, p_Count-1, 0);
 		
 		for (int i = 1; i<p_Count; i++)
 		{
-			Thread l_Woolie = new Woolie(l_Room);
-			l_Woolie.start();
+			Thread l_Woolie = new Woolie(l_Room, i);
+			l_ThreadList.add(l_Woolie);
 		}
 		
-		l_Leader.start();
+		l_ThreadList.add(l_Leader);
+		for (Thread t : l_ThreadList)
+		{
+			t.start();
+		}
+		
+		for (Thread t: l_ThreadList)
+		{
+			try {
+				t.join();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		double expectedValue = p_Count * (p_Count-1);
 		
@@ -33,10 +51,15 @@ public class WooliePuzzle {
 		
 		expectedValue = Math.ceil(expectedValue);
 		
-		System.out.println("Expected Value: " + expectedValue);
-		System.out.println("Outcome: " + l_Room.getTimesVisited());
-		
-		
+		while(true)
+		{
+			if (l_Room.getSolved())
+			{
+				System.out.println("Expected Value: " + expectedValue);
+				System.out.println("Outcome: " + l_Room.getTimesVisited());
+				break;
+			}
+		}
 		
 	}
 	
