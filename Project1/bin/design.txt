@@ -1,0 +1,53 @@
+csci142 Puzzle Solver, Project Part 2:  Water & Clock
+
+Name: Meghan Dwyer and Bob Krency
+
+1. Explain how your common solver is able to work with both puzzles.
+We implemented generics, so that each puzzle could define the configuration
+type that would be necessary to solve the problem. We also had each puzzle
+define its own hash function so that memoization could correctly reflect
+visited configurations.
+
+
+2. What was the type of configuration you used for each puzzle?
+For the Mobius puzzle we used an Integer configuration, and for the Sand puzzle
+we created a Bucket class to contain the bucket capacity and its current fill
+amount then used an ArrayList<Bucket> configuration.
+
+
+
+3. Starting with the Puzzle interface from part 1, what were the major
+changes and additions you had to make?
+In Puzzle Interface:
+    -Converted the interface to accept generics
+    -Rewrote getGoal() to be isGoal()
+    -Added a printSolution() stub
+    -Added a hash() stub
+In Mobius Class:
+    -Altered code to suit generics implementation
+    -Added printSolution()
+    -Added hash()
+In Solver Class:
+    -Altered code to suit generics implementation
+    -Added Memoization:
+        -Created a HashSet to store visited configurations
+        -Found the hash of a configuration
+        -Added hash to HashSet if the configuration had not yet been visited
+        -Altered code so visited configurations would not be re-visited
+Created Bucket Class
+Created Sand Class
+
+
+4. What problems, if any, did you encounter when re-designing your
+project from part 1?
+Our first problem came with where to begin the re-design. Ultimately we decided
+to begin by implementing the new classes needed, then altering existing code.
+We struggled with the correct implemenation of generics as neither of us were
+familar with their use prior to this assignment.
+We encountered some problems with implementing memoization. This led us to
+having each Puzzle create its own hash function so that we could be sure that
+memoization was occuring correctly in Sand where a configuration would be
+considered the same when multiple buckets experience the same level of fill at
+different points in the Solver.
+
+

@@ -1,0 +1,22 @@
+Need to implement the GUI
+- Add status bar
+	- Info on Win/Lose
+	- Info on Valid/Invalid Moves
+	- Move Counter
+- Add Buttons at Bottom
+	- Reset
+	- Exit
+	- Next Step
+	- Event Handlers
+- Add Event handlers for Chess Buttons
+	- If piece selected, move it
+	- Otherwise, select the piece at the location
+
+
+	
+Update Method for GUI
+- Get labels of all the buttons
+- set all button backgrounds to white
+- if a piece is selected
+	- get selected piece and its possible moves and color yellow
+- update status bar

@@ -34,6 +34,8 @@ public class Solver<E>{
         ArrayList<ArrayList<E>> queue = new ArrayList<>();
         ArrayList<E> currentPath = new ArrayList<E>();
         currentPath.add((E) obj.getStart());
+        if (obj.isGoal(obj.getStart()))
+        	return currentPath;
         queue.add(currentPath);
         HashSet<Integer> visited = new HashSet<>();
 
