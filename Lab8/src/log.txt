@@ -1,3 +1,15 @@
+commit 5659f605daee81e020f57cbd885509eed3001296
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Wed Jul 29 17:05:10 2015 -0400
+
+    Changed implementation to support an RNG
+
+commit 9ffaa594cd4e9bc705fc486c303a939a08e1a12a
+Author: Robert Krency <rdk5039@rit.edu>
+Date:   Tue Jul 28 16:03:30 2015 -0400
+
+    Added Project3 files, updated Lab8
+
 commit e72cc70de46abc2ad22515f420e02545e32217ed
 Author: Robert Krency <rdk5039@rit.edu>
 Date:   Thu Jul 23 19:12:44 2015 -0400
