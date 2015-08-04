@@ -140,12 +140,13 @@ public class ATM
             conn = new Socket(args[0], Integer.parseInt(args[1]));
 
             // Write the transaction out to the server
-            net_out = (ObjectOutputStream) conn.getOutputStream();
-            net_in = (ObjectInputStream) conn.getInputStream();
+            net_out = new ObjectOutputStream(conn.getOutputStream());
+            net_in = new ObjectInputStream(conn.getInputStream());
+            net_out.writeObject(l_Message);
 
             // Wait for the reply.  Once it arrives store a reference
             // to the reply in the variable named confirmation
-
+            
             BankMessage confirmation = (BankMessage) net_in.readObject();
 
             // ------------------------------------------------------------
