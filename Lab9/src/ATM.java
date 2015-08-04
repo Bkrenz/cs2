@@ -134,15 +134,19 @@ public class ATM
             // -----------------------------------------------------
 
             // Create the message that specifies the transaction
+            BankMessage l_Message = new BankMessage(account, command, amount);
 
             // Connect to the bank server
+            conn = new Socket(args[0], Integer.parseInt(args[1]));
 
             // Write the transaction out to the server
+            net_out = (ObjectOutputStream) conn.getOutputStream();
+            net_in = (ObjectInputStream) conn.getInputStream();
 
             // Wait for the reply.  Once it arrives store a reference
             // to the reply in the variable named confirmation
 
-            BankMessage confirmation = null;
+            BankMessage confirmation = (BankMessage) net_in.readObject();
 
             // ------------------------------------------------------------
             // ** The rest of this program should not be changed -- W.C. **
@@ -193,7 +197,10 @@ public class ATM
         catch( java.io.IOException e ) 
         {
              System.err.println( e );
-        }
+        } catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 
 } //ATM
