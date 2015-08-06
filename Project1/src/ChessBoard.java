@@ -24,7 +24,8 @@ public class ChessBoard extends Observable {
 	private Integer[] m_Dimensions;
 	private Integer[] m_CurrentPiece;
 	private int m_MovesCounter;
-	private boolean m_GameStatus;
+	private int m_GameStatus;
+	private Solver<ChessBoard> m_Solver;
 	
 	/* End Class Members */
 	
@@ -36,7 +37,8 @@ public class ChessBoard extends Observable {
 		this.m_Dimensions = new Integer[2];
 		this.m_CurrentPiece = null;
 		this.m_MovesCounter = 0;
-		this.m_GameStatus = false;
+		this.m_GameStatus = 0;
+		this.m_Solver = new Solver<ChessBoard>();
 		
 		// Parse File
 		Scanner l_FileReader = new Scanner(new File(p_FileName));
@@ -54,9 +56,7 @@ public class ChessBoard extends Observable {
 		}
 		
 		l_FileReader.close();
-		
-		this.setChanged();
-		this.notifyObservers();
+		this.update();
 	}
 	
 	public ChessBoard(char[][] p_Board, Integer[] p_Dim, Integer[] p_Piece)
@@ -68,9 +68,7 @@ public class ChessBoard extends Observable {
 				
 		this.m_Dimensions = p_Dim;
 		this.m_CurrentPiece = p_Piece;
-		
-		this.setChanged();
-		this.notifyObservers();
+		this.update();
 	}
 	
 	/* End constructors */
@@ -83,20 +81,32 @@ public class ChessBoard extends Observable {
 		ArrayList<Integer[]> l_MovesList = new ArrayList<>();
 		
 		ArrayList<Integer[]> l_Queue = new ArrayList<>();
-		l_Queue.addAll(this.getAdjacentLocations(p_Location));
+		l_Queue.add(p_Location);
+		ArrayList<Integer> l_Visited = new ArrayList<>();
 		
 		while (!l_Queue.isEmpty())
 		{
 			Integer[] current = l_Queue.get(0);
 			l_Queue.remove(0);
-			if (!this.isSpaceEmpty(current))
+
+			if (this.isValidMove(p_Location, current) && !this.isSpaceEmpty(current))
 				l_MovesList.add(current);
 			else
-				for (Integer[] loc : this.getAdjacentLocations(current))
-					if (this.isValidMove(p_Location, loc))
+			{
+				ArrayList<Integer[]> neighbors = this.getAdjacentLocations(current);
+				
+				for (Integer[] loc : neighbors)
+				{
+					String locString = loc[0] + "," + loc[1];
+					if (!l_Visited.contains(locString.hashCode()) && this.isValidMove(p_Location, loc))
+					{
+						l_Visited.add(locString.hashCode());
 						l_Queue.add(loc);
+						
+					}
+				}
+			}
 		}
-		
 		return l_MovesList;
 	}
 	
@@ -131,7 +141,6 @@ public class ChessBoard extends Observable {
 	
 	public boolean isValidMove(Integer[] p_Location, Integer[] p_NewLocation)
 	{
-		
 		char l_Piece = this.m_Board[p_Location[0]][p_Location[1]];
 		
 		if (p_Location[0] == p_NewLocation[0] && p_Location[1] == p_NewLocation[1])
@@ -161,9 +170,6 @@ public class ChessBoard extends Observable {
 	
 	private boolean isValidBishopMove(Integer[] p_Location, Integer[] p_NewLocation)
 	{
-		if (this.isSpaceEmpty(p_NewLocation))
-			return false;
-		
 		int vertDiff = p_Location[0] - p_NewLocation[0];
 		int horiDiff = p_Location[1] - p_NewLocation[1];
 		
@@ -175,9 +181,6 @@ public class ChessBoard extends Observable {
 	
 	private boolean isValidKingMove(Integer[] p_Location, Integer[] p_NewLocation)
 	{
-		if (this.isSpaceEmpty(p_NewLocation))
-			return false;
-		
 		int diff = p_Location[0] - p_NewLocation[0];
 		if (Math.abs(diff) > 1)
 			return false;
@@ -191,9 +194,6 @@ public class ChessBoard extends Observable {
 	
 	private boolean isValidKnightMove(Integer[] p_Location, Integer[] p_NewLocation)
 	{
-		if (this.isSpaceEmpty(p_NewLocation))
-			return false;
-		
 		int vertDiff = Math.abs(p_Location[0] - p_NewLocation[0]);
 		int horiDiff = Math.abs(p_Location[1] - p_NewLocation[1]);
 		
@@ -208,9 +208,6 @@ public class ChessBoard extends Observable {
 	
 	private boolean isValidPawnMove(Integer[] p_Location, Integer[] p_NewLocation)
 	{
-		if (this.isSpaceEmpty(p_NewLocation))
-			return false;
-		
 		int vertDiff = p_Location[0] - p_NewLocation[0];
 		int horiDiff = Math.abs(p_Location[1] - p_NewLocation[1]);
 		
@@ -228,9 +225,6 @@ public class ChessBoard extends Observable {
 	
 	private boolean isValidRookMove(Integer[] p_Location, Integer[] p_NewLocation)
 	{
-		if (this.isSpaceEmpty(p_NewLocation))
-			return false;
-		
 		if ((p_Location[1] == p_NewLocation[1]) || (p_Location[0] == p_NewLocation[0]))
 			return true;
 		
@@ -244,7 +238,7 @@ public class ChessBoard extends Observable {
 	
 	public void selectPiece(Integer[] p_Location)
 	{
-		if (this.m_GameStatus)
+		if (this.m_GameStatus != 0)
 			return;
 		
 		if (isSpaceEmpty(p_Location))
@@ -263,25 +257,23 @@ public class ChessBoard extends Observable {
 	
 	public void movePiece(Integer[] p_Location)
 	{
-		if (this.m_GameStatus)
+		if (this.m_GameStatus != 0)
 			return;
 		
-		if (this.m_CurrentPiece == null)
-			return;
-		
-		if (!this.isValidMove(this.m_CurrentPiece, p_Location))
+		for (Integer[] loc : this.getMoves(this.m_CurrentPiece))
 		{
-			this.m_CurrentPiece = null;
-		}
-		else 
-		{
-			char l_Piece = this.m_Board[this.m_CurrentPiece[0]][this.m_CurrentPiece[1]];
-			this.m_Board[this.m_CurrentPiece[0]][this.m_CurrentPiece[1]] = '.';
-			this.m_Board[p_Location[0]][p_Location[1]] = l_Piece;
-			this.m_CurrentPiece = null;
-			this.m_MovesCounter++;
+			if (loc[0] == p_Location[0] && loc[1] == p_Location[1])
+			{
+				char l_Piece = this.m_Board[this.m_CurrentPiece[0]][this.m_CurrentPiece[1]];
+				this.m_Board[this.m_CurrentPiece[0]][this.m_CurrentPiece[1]] = '.';
+				this.m_Board[p_Location[0]][p_Location[1]] = l_Piece;
+				this.m_MovesCounter++;
+				break;
+			}
 		}
 		
+		this.m_CurrentPiece = null;
+	
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -325,7 +317,7 @@ public class ChessBoard extends Observable {
 	
 	public char getPiece(int x, int y)
 	{
-		return this.m_Board[x][y];
+		return this.getPiece(mkLoc(x,y));
 	}
 	
 	public char[][] getBoard()
@@ -348,16 +340,26 @@ public class ChessBoard extends Observable {
 					pieceCount++;
 				}
 			}
-		if (pieceCount == 1)
-		{
-			this.m_GameStatus = true;
-		}
 		
-		if (this.m_GameStatus)
+		if (pieceCount == 1)
+			this.m_GameStatus = 1;
+
+		Puzzle<ChessBoard> l_Puzzle = new ChessPuzzle(this);
+		ArrayList<ChessBoard> l_Solution = (ArrayList<ChessBoard>) this.m_Solver.solverBFS(l_Puzzle);
+		if (!l_Puzzle.isGoal(l_Solution.get(l_Solution.size()-1)))
+			this.m_GameStatus = 2;
+		
+		if (this.m_GameStatus == 1)
 			return "Moves: " + this.m_MovesCounter + "    YOU WIN!";
-		if (this.m_CurrentPiece != null)
-			return "Moves: " + this.m_MovesCounter + "   Piece Selected: " + this.getPiece(this.m_CurrentPiece);
-		return "Moves: " + this.m_MovesCounter + "   Piece Selected: None";
+		else if (this.m_GameStatus == 2)
+			return "Moves: " + this.m_MovesCounter + "    No moves left. YOU LOSE";
+
+		System.out.println(this.toString());
+		
+		char l_Piece = ' ';
+		if ( this.isPieceSelected() )
+			l_Piece = this.getPiece(this.m_CurrentPiece);
+		return "Moves: " + this.m_MovesCounter + "   Piece Selected: " + l_Piece;
 	}
 	
 	public void updateBoard(ChessBoard p_NewBoard)
@@ -371,7 +373,7 @@ public class ChessBoard extends Observable {
 	public void resetMoveCounter()
 	{
 		this.m_MovesCounter = 0;
-		this.m_GameStatus = false;
+		this.m_GameStatus = 0;
 		this.setChanged();
 		this.notifyObservers();
 	}
@@ -384,15 +386,26 @@ public class ChessBoard extends Observable {
 		{
 			for (Integer[] loc : this.getMoves(this.m_CurrentPiece))
 			{
-				if (isValidMove(this.m_CurrentPiece, loc))
-				{
-					int newLoc = loc[0] * this.m_Dimensions[1] + loc[1];
-					l_Moves.add(newLoc);
-				}
+				int newLoc = loc[0] * this.m_Dimensions[1] + loc[1];
+				l_Moves.add(newLoc);
 			}
 		}
 		
 		return l_Moves;
+	}
+	
+	public void makeNextMove()
+	{
+		Puzzle<ChessBoard> l_Puzzle = new ChessPuzzle(this);
+		ArrayList<ChessBoard> l_Solution = this.m_Solver.solverBFS(l_Puzzle);
+		if (l_Puzzle.isGoal(l_Solution.get(l_Solution.size()-1)))
+			this.updateBoard(l_Solution.get(1));
+	}
+	
+	public void update() 
+	{
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	/* End Class Methods */

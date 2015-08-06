@@ -74,12 +74,9 @@ public class ChessPuzzle implements Puzzle<ChessBoard>{
 		
 		ArrayList<ChessBoard> boardList = new ArrayList<>();
 		
-		
-		
 		for (int i = 0 ; i < config.getDimensions()[0] ; i++)
 			for (int j = 0; j < config.getDimensions()[1] ; j++)
 			{
-				
 				Integer[] loc = new Integer[2];
 				loc[0] = i;
 				loc[1] = j;

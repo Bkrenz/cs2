@@ -78,7 +78,10 @@ public class Chess extends Application implements Observer{
 		Scene l_Scene = new Scene(l_BP);
 		p_Stage.setScene(l_Scene);
 		p_Stage.sizeToScene();
+		p_Stage.setTitle("Solitaire Chess, rdk5039, Robert Krency");
 		p_Stage.show();
+		
+		this.m_Board.update();
 	}
 	
 	public void stop()
@@ -114,14 +117,29 @@ public class Chess extends Application implements Observer{
 	
 	/* GUI Builder Methods */
 	
-	public HBox makeStatusBar()
+	public VBox makeStatusBar()
 	{
-		HBox l_HBox = new HBox();
+		VBox l_VBox = new VBox();
 		
 		this.m_StatusBar = new Label(this.m_Board.getStatus());
-		l_HBox.getChildren().add(this.m_StatusBar);
+		l_VBox.getChildren().add(this.m_StatusBar);
+		l_VBox.getChildren().add(makeRules());
 		
-		return l_HBox;
+		return l_VBox;
+	}
+	
+	public Label makeRules()
+	{
+		Label l_Rules = new Label();
+		
+		String text = "Rules:\n";
+		text += "All pieces move according to traditional chess rules.\n";
+		text += "You must take a piece with each move.\n";
+		text += "The game is won when one piece remains";
+		
+		l_Rules.setText(text);
+		
+		return l_Rules;
 	}
 	
 	public GridPane makeChessGrid()
@@ -240,10 +258,7 @@ public class Chess extends Application implements Observer{
 	
 	public void nextStep()
 	{
-		ChessPuzzle l_Puzzle = new ChessPuzzle(this.m_Board.clone());
-		ArrayList<ChessBoard> l_Solution = this.m_Solver.solverBFS(l_Puzzle);
-		if (l_Solution.size() > 1)
-			this.m_Board.updateBoard(l_Solution.get(1));
+		this.m_Board.makeNextMove();
 	}
 	
 	public Integer[] getLocFromIndex(int p_Index)
