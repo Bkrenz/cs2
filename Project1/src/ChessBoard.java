@@ -81,7 +81,10 @@ public class ChessBoard extends Observable {
 		ArrayList<Integer[]> l_MovesList = new ArrayList<>();
 		
 		ArrayList<Integer[]> l_Queue = new ArrayList<>();
-		l_Queue.add(p_Location);
+		if (this.getPiece(p_Location) == 'N')
+			l_Queue.addAll(this.getAdjacentLocations(p_Location));
+		else
+			l_Queue.add(p_Location);
 		ArrayList<Integer> l_Visited = new ArrayList<>();
 		
 		while (!l_Queue.isEmpty())
@@ -91,14 +94,14 @@ public class ChessBoard extends Observable {
 
 			if (this.isValidMove(p_Location, current) && !this.isSpaceEmpty(current))
 				l_MovesList.add(current);
-			else
+			else 
 			{
 				ArrayList<Integer[]> neighbors = this.getAdjacentLocations(current);
 				
 				for (Integer[] loc : neighbors)
 				{
 					String locString = loc[0] + "," + loc[1];
-					if (!l_Visited.contains(locString.hashCode()) && this.isValidMove(p_Location, loc))
+					if ( !l_Visited.contains(locString.hashCode()) && this.isValidMove(p_Location, loc) )
 					{
 						l_Visited.add(locString.hashCode());
 						l_Queue.add(loc);
@@ -353,8 +356,6 @@ public class ChessBoard extends Observable {
 			return "Moves: " + this.m_MovesCounter + "    YOU WIN!";
 		else if (this.m_GameStatus == 2)
 			return "Moves: " + this.m_MovesCounter + "    No moves left. YOU LOSE";
-
-		System.out.println(this.toString());
 		
 		char l_Piece = ' ';
 		if ( this.isPieceSelected() )
@@ -396,10 +397,16 @@ public class ChessBoard extends Observable {
 	
 	public void makeNextMove()
 	{
-		Puzzle<ChessBoard> l_Puzzle = new ChessPuzzle(this);
-		ArrayList<ChessBoard> l_Solution = this.m_Solver.solverBFS(l_Puzzle);
-		if (l_Puzzle.isGoal(l_Solution.get(l_Solution.size()-1)))
-			this.updateBoard(l_Solution.get(1));
+		try{
+			Puzzle<ChessBoard> l_Puzzle = new ChessPuzzle(this);
+			ArrayList<ChessBoard> l_Solution = this.m_Solver.solverBFS(l_Puzzle);
+			if (l_Puzzle.isGoal(l_Solution.get(l_Solution.size()-1)))
+				this.updateBoard(l_Solution.get(1));
+		}
+		catch (IndexOutOfBoundsException e)
+		{
+			
+		}
 	}
 	
 	public void update() 

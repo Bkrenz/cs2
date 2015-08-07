@@ -78,7 +78,7 @@ public class Chess extends Application implements Observer{
 		Scene l_Scene = new Scene(l_BP);
 		p_Stage.setScene(l_Scene);
 		p_Stage.sizeToScene();
-		p_Stage.setTitle("Solitaire Chess, rdk5039, Robert Krency");
+		p_Stage.setTitle("rdk5039 robert krency chess solitaire");
 		p_Stage.show();
 		
 		this.m_Board.update();
@@ -100,13 +100,18 @@ public class Chess extends Application implements Observer{
 		{
 			Integer[] loc = this.getLocFromIndex(i);
 			char piece = this.m_Board.getPiece(loc);
+			if (piece == '.')
+				piece = ' ';
 			Button b = this.m_ButtonList.get(i);
 			b.setText(piece+"");
-			b.setStyle("-fx-base: white");
+			if ( (loc[1] + loc[0] % 2) % 2 == 0 )
+				b.setStyle("-fx-base: white ; -fx-font-color: black");
+			else
+				b.setStyle("-fx-base: black ; -fx-font-color: white");
 		}
 		
 		for (int loc : this.m_Board.getAvailableMoves())
-			this.m_ButtonList.get(loc).setStyle("-fx-base: yellow");
+			this.m_ButtonList.get(loc).setStyle("-fx-border-color: yellow ; -fx-base: white");
 		
 		this.m_StatusBar.setText(this.m_Board.getStatus());
 		
