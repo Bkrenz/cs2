@@ -9,10 +9,15 @@ ChessPuzzle
 As well as a text file representing the board configuration, like this:
 
 4 4
+
 . P . .
+
 . R R .
+
 . . N N
+
 B . P B
+
 
 It's formatted as size in the first line (LxW) with the pieces placed in the following lines.
 
